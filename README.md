@@ -12,6 +12,10 @@ Add detailed notes to each task for better organization
 Receive push notifications and reminders for upcoming tasks
 Cross-platform support (available on Windows, MacOS, iOS, Android) through an Api
 
+## User interface
+* **Dashboard**
+[![Dashboard](image_file_name.jpg)](doitapp_ui/Doit%20App%20Dasboard.png)
+
 ## Author
 * **Name:** Balogun Adedotun
 * **github:** Dotunoflagos
