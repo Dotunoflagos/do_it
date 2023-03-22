@@ -13,9 +13,9 @@ Receive push notifications and reminders for upcoming tasks
 Cross-platform support (available on Windows, MacOS, iOS, Android) through an Api
 
 ## Author
--**Name:** Balogun Adedotun
--**github:** Dotunoflagos
--**email:** adedotun_balogun@yahoo.com
+* **Name:** Balogun Adedotun
+* **github:** Dotunoflagos
+* **email:** adedotun_balogun@yahoo.com
 
 ## License
 Doit is licensed under the MIT License. Feel free to clone, modify and distribute the source code as you see fit. However, we do ask that you credit us appropriately and send us a message letting us know how you are using the application.
