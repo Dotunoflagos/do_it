@@ -1,0 +1,44 @@
+    Log user in
+    ---
+    tags:
+      - Users
+    parameters:
+      - name: email_and_password
+        in: body
+        required: true
+        requires:
+          - email:
+          - password:
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+    responses:
+      400:
+        description: Missing email/password or not a JSON
+      200:
+        description: request executed successfully
+        schema:
+          properties:
+            user:
+              description: User info
+              properties:
+                refresh:
+                  type: string
+                  description: Refresh tokin
+                access:
+                  type: string
+                  description: Access tokin
+                first_name:
+                  type: string
+                  description: user's first name
+                last_name:
+                  type: string
+                  description: user's last name
+                full_name:
+                  type: string
+                  description: Uswes full name (Last name first)
+                email:
+                  type: string
+                  description: user email

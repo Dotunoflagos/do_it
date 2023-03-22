@@ -1,0 +1,27 @@
+    Create a new user (signup)
+    ---
+    tags:
+      - Users
+    parameters:
+      - name: email_and_password
+        in: body
+        required: true
+        requires:
+          - email:
+          - password:
+        properties:
+          email:
+            type: string
+          password:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          password:
+            type: string
+    responses:
+      400:
+        description: Missing email/password or not a JSON
+      201:
+        description: successfully created user
