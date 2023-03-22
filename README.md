@@ -14,7 +14,16 @@ Cross-platform support (available on Windows, MacOS, iOS, Android) through an Ap
 
 ## User interface
 * **Dashboard**
+
 ![Dashboard](./doitapp_ui/Doit%20App%20Dasboard.png)
+
+* **login**
+
+![Login](./doitapp_ui/Doit%20App%20Login.png)
+
+* **signup**
+
+![Dashboard](./doitapp_ui/Doit%20App%20Signup.png)
 
 ## Author
 * **Name:** Balogun Adedotun
