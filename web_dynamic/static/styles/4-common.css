@@ -1,14 +1,36 @@
 body {
     margin: 0;
     padding: 0;
-    color: #484848;
+    color: #333333;
     font-size: 14px;
-    font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    height: 100%;
+    background-color: #F2F2F2;
 }
-body .container {
-    max-width: 1000px;
-    margin: 30px auto;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-ul li input[type="checkbox"] {
-    margin: 0 10px 0 0;
+
+/* Width and height for the scrollbar track */
+::-webkit-scrollbar {
+    width: 4px;
+    height: 8px;
+}
+
+/* Color of the scrollbar track */
+::-webkit-scrollbar-track {
+    background: #fff9f100;
+}
+
+/* Color of the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Rounded corners on the thumb */
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
 }

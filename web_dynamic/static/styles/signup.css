@@ -1,0 +1,110 @@
+body {
+    background-color: #F2F2F2;
+}
+
+.login_body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.signup_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 350px;
+    height: auto;
+    padding: 40px;
+    border-radius: 16px;
+    flex-flow: column;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(240, 242, 247, 1) 100%);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.form {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.signup_form input {
+    padding: 13px 15px;
+    margin-bottom: 24px;
+    font-size: 18px;
+    border-radius: 8px;
+    border-width: 0.4px;
+    border-style: solid;
+    border-color: #CCCCCC;
+    width: -webkit-fill-available
+}
+
+.signup_form input:hover {
+    border-width: 0.4px;
+    border-color: #1a1a1a;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.signup_form input:focus-visible {
+    outline-width: 0px !important;
+    border-width: 0.4px;
+    border-color: #1a1a1a;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+}
+
+.signup_form button {
+    padding: 13px 15px;
+    margin-bottom: 24px;
+    font-size: 24px;
+    text-decoration: solid;
+    color: #f3f3f3;
+    border-radius: 8px;
+    border-style: none;
+    background-color: #004D73;
+    width: -webkit-fill-available;
+    cursor: pointer;
+}
+
+.signup_form .logo {
+    margin-bottom: 24px;
+}
+
+.signup_form button:active {
+    transform: translateY(1px); /* move the button down */
+    filter: brightness(80%); /* reduce the brightness slightly */
+}
+
+.eye {
+    position: absolute;
+    right: 12%;
+    padding-top: 12px;
+    cursor: pointer;
+}
+
+.eye:active {
+    transform: translateY(1px); /* move the button down */
+    filter: brightness(80%); /* reduce the brightness slightly */
+}
+
+.password_box {
+    width: -webkit-fill-available
+}
+
+.signup {
+    display: contents
+}
+
+.sesionmsg {
+    height: 30px;
+}
+.sesionmsg p {
+    color: red;
+    font-size: 18px;
+    margin: auto;
+}

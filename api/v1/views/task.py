@@ -116,7 +116,6 @@ def put_state(task_id):
     ignore = ['id', 'created_at', 'updated_at']
     user_id = get_jwt_identity()
     data = request.get_json()
-    
     if not task.task_name == data["task_name"]:
         task_name = request.json.get('task_name', "")
 

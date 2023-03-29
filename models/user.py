@@ -48,7 +48,8 @@ class User(BaseModel, Base):
                     'first_name': self.first_name,
                     'last_name': self.last_name,
                     'full_name': self.last_name + " " + self.first_name,
-                    'email': self.email
+                    'email': self.email,
+                    'id': self.id
                 }
             }
         else:

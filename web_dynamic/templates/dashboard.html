@@ -1,63 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../static/styles/4-common.css?{{ cache_id }}">
-    <link rel="stylesheet" type="text/css" href="../static/styles/3-header.css?{{ cache_id }}">
-    <link rel="stylesheet" type="text/css" href="../static/styles/3-footer.css?{{ cache_id }}">
-    <link rel="stylesheet" type="text/css" href="../static/styles/6-filters.css?{{ cache_id }}">
-    <link type="text/css" rel="stylesheet" href="../static/styles/8-places.css?{{ cache_id }}">
-    <link rel="icon" href="../static/images/icon.png?{{ cache_id }}" />
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js?{{ cache_id }}"></script>
-    <script src="../static/scripts/3-hbnb.js?{{ cache_id }}"></script>
-    <title>HBnB</title>
-  </head>
-  <body>
-    <header>
-      <div class="logo"></div>
-	  <div id="api_status"></div>
-    </header>
-    <div class="container">
-      <section class="filters">
-	<div class="locations">
-	  <h3>States</h3>
-	  <h4>&nbsp;</h4>
-	  <div class="popover">
-	    <ul>
-	      {% for state in states %}
-	      <li>
-		<h2>{{ state[0].name }}:</h2>
-		<ul>
-		  {% for city in state[1] %}
-		  <li>{{ city.name }}</li>
-		  {% endfor %}
-		</ul>
-	      </li>
-	      {% endfor %}
-	    </ul>
-	  </div>
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../static/styles/4-common.css?{{ cache_id }}">
+	<link rel="stylesheet" type="text/css" href="../static/styles/dashboard-main.css?{{ cache_id }}">
+	<link rel="icon" href="../static/images/icon.png?{{ cache_id }}" />
+	<script src="https://kit.fontawesome.com/11423b0f4d.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<script src="../static/scripts/dashboard.js?{{ cache_id }}"></script>
+	<title>Dashboard</title>
+</head>
+
+<body>
+	<div class="main">
+		<div class="leftmenu">
+			<a href="javascript:void(0)" class="closebtn">&times;</a>
+			<div class="profile">
+				<div class="picture"></div>
+				<div class="names">
+					<p>Balogun Adedotun</p>
+					<p>adedotun_balogun@yahoo.com</p>
+				</div>
+			</div>
+			<div>
+				<ul class="folders">
+					<li data-id="{{ important }}" class="">
+						<i class="far fa-star"></i>
+						<p>Important</p>
+					</li>
+					<li data-id="{{ all }}">
+						<i class="fa-regular fa-file"></i>
+						<p>All</p>
+					</li>
+					<li data-id="{{ completed }}">
+						<i class="fa-solid fa-check"></i>
+						<p>Completed</p>
+					</li>
+					<li data-id="{{ task }}">
+						<i class="fa-solid fa-house"></i>
+						<p>Task</p>
+					</li>
+					<hr>
+					<h2>Lists</h2>
+				</ul>
+			</div>
+			<div class="lists">
+				<ul class="folders">
+					{% for obj in obj %}
+					<li data-id="{{ obj.id }}">
+						<i class="fa-regular fa-folder"></i>
+						<p>{{ obj.folder_name }}</p>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="newFolder">
+				<input type="text" class="searchbar" placeholder="Add leat" id="addList">
+				<i class="fa-solid fa-plus glass"></i>
+			</div>
+		</div>
+		<div class="tadoarea">
+			<div class="todos">
+				<div class="searchBarContainer">
+					<input type="text" class="searchbar" placeholder="Search">
+					<i class="fa-solid fa-magnifying-glass glass"></i>
+				</div>
+				<span style="font-size:30px;cursor:pointer" class="openbtn">&#9776;</span>
+				<h1 class="foldername">Important</h1>
+				<div class="allTask">
+					<div id="unchecked">
+						<div class="task">
+							<div>
+								<div name="tick" class="tick checkbox"></div>
+								<p class="taskName">Read a book</p>
+							</div>
+
+							<div>
+								<p class="dueDate">Fri, Nov 19, 2022</p>
+								<div name="important" class="important checkbox"></div>
+							</div>
+						</div>
+
+						<div class="task">
+							<div>
+								<div name="tick" class="tick checkbox"></div>
+								<p class="taskName">Read a book</p>
+							</div>
+
+							<div>
+								<p class="dueDate">Fri, Nov 19, 2023</p>
+								<div name="important" class="important checkbox"></div>
+							</div>
+						</div>
+
+						<div class="task">
+							<div>
+								<div name="tick" class="tick checkbox"></div>
+								<p class="taskName">dance a dance dance</p>
+							</div>
+
+							<div>
+								<p class="dueDate">Fri, Nov 19, 2023</p>
+								<div name="important" class="important checkbox"></div>
+							</div>
+						</div>
+
+					</div>
+					<div class="completedbtn">
+						<p>Completed <span id="done"></span></p>
+					</div>
+					<div id="checked">
+					</div>
+				</div>
+
+				<div class="addBarContainer">
+					<input type="text" class="searchbar" placeholder="Add task" id="addTask">
+					<i class="fa-solid fa-plus glass"></i>
+				</div>
+			</div>
+			<div class="details">
+				<a href="javascript:void(0)" class="detailsbtn">&times;</a>
+			</div>
+		</div>
 	</div>
-	<div class="amenities">
-	  <h3>Amenities</h3>
-	  <h4>&nbsp;</h4>
-	  <div class="popover">
-	    <ul>
-	      {% for amenity in amenities %}
-	      <li><input type="checkbox" data-id="{{amenity.id}}" data-name="{{amenity.name}}">{{ amenity.name }}</li>
-	      {% endfor %}
-	    </ul>
-	  </div>
-	</div>
-	<button type="button">Search</button>
-      </section>
-      <div class="placesh1"><h1>Places</h1></div>
-      <section class="places">
-	<!-- <h1>Places</h1> -->
-	
-      </section>
-    </div>
-    <footer>
-      <p>Holberton School</p>
-    </footer>
-  </body>
+</body>
+
 </html>

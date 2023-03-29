@@ -92,7 +92,7 @@ class DBStorage:
         obj = None
         if user_id is not None:
             obj = self.__session.query(Folder).filter(
-                Folder.user_id == user_id).order_by(Folder.position.asc()).all()
+                Folder.user_id == user_id).order_by(Folder.position.desc()).all()
         return obj
 
     '''def get_task_by_folder_id(self, folder_id):
@@ -117,7 +117,7 @@ class DBStorage:
         obj = None
         if id is not None and cls.__name__ in ["Task", "Folder"]:
             obj = self.__session.query(Task).filter(
-                eval(f'Task.{clss[cls.__name__]}') == id).order_by(Task.position.desc()).all()
+                eval(f'Task.{clss[cls.__name__]}') == id).order_by(Task.position.asc()).all()
         return obj
     
     def get_by_id_and_name(self, cls, user_id, name):

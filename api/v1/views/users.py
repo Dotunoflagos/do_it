@@ -1,15 +1,17 @@
 #!/usr/bin/python3
 """ objects that handle all default RestFul API actions for Users """
+from flask import abort, jsonify, make_response, request
 from models import storage
 from api.v1.views import app_views
-from flask import abort, jsonify, make_response, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flasgger import swag_from
 from models.user import User
 from models.folder import Folder
+import re
 
 
-'''@app_views.route('/users/all', methods=['GET'], strict_slashes=False)
+
+@app_views.route('/users/all', methods=['GET'], strict_slashes=False)
 @swag_from('documentation/user/all_users.yml')
 def get_all_users():
     """
@@ -20,7 +22,23 @@ def get_all_users():
     list_users = []
     for user in all_users:
         list_users.append(user.to_dict())
-    return jsonify(list_users)'''
+    return jsonify(list_users)
+
+
+def is_valid_email(email):
+    # Define the regex pattern for a valid email address
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+    # Use the pattern to match the given email address
+    match = re.match(pattern, email)
+
+    # If a match was found, then the email is valid
+    if match:
+        return True
+
+    # Otherwise, the email is not valid
+    else:
+        return False
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -60,7 +78,7 @@ def login_user():
 
 @app_views.route('/users', methods=['DELETE'],
                  strict_slashes=False)
-#@swag_from({'file': 'documentation/user/delete_user.yml'}, methods=['DELETE'])
+# @swag_from({'file': 'documentation/user/delete_user.yml'}, methods=['DELETE'])
 @jwt_required()
 def delete_user(user_id):
     """
@@ -84,34 +102,51 @@ def post_user():
     """
     Sign user up
     """
+    data = request.get_json()
+    email = data.get("email", "")
+    first_name = data.get("first_name", "")
+    last_name = data.get("last_name", "")
+    password = data.get("password", "")
+
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    if 'email' not in request.get_json():
-        abort(400, description="Missing email")
-    if 'password' not in request.get_json():
-        abort(400, description="Missing password")
+    if 'email' not in request.get_json() or data.get("email", "") == "":
+        return jsonify({'error': "Missing email"}), 400
 
-    data = request.get_json()
-    email = data.get("email")
+    if not is_valid_email(email):
+        return jsonify({'error': "Invalied email"}), 400
 
     if storage.get_user_by_email(email) is not None:
-        abort(400, description="Existing user")
+        return jsonify({'error': "Email used please login"}), 400
 
-    first_name = data.get("first_name", "")
-    last_name  = data.get("last_name ", "")
+    if len(first_name) < 2:
+        return jsonify({'error': "First name is too short"}), 400
+
+    if len(last_name) < 2:
+        return jsonify({'error': "Last name is too short"}), 400
+
+    if 'password' not in request.get_json() or data.get("password", "") == "":
+        return jsonify({'error': "Missing password"}), 400
+
+    if len(password) < 6:
+        return jsonify({'error': "Password is too short"}), 400
 
     data["first_name"] = first_name
     data["last_name"] = last_name
-    
+
     instance = User(**data)
-    important = Folder(folder_name="Important", position= 1, user_id= instance.id)
-    task = Folder(folder_name="Tasks", position= 2, user_id= instance.id)
-    
+    important = Folder(folder_name="important",position=1, user_id=instance.id)
+    completed = Folder(folder_name="completed", position=3, user_id=instance.id)
+    alla = Folder(folder_name="all", position=2, user_id=instance.id)
+    task = Folder(folder_name="task", position=4, user_id=instance.id)
+
     instance.save()
     important.save()
+    completed.save()
+    alla.save()
     task.save()
-    #print(instance.to_dict())
+    # print(instance.to_dict())
     return make_response(jsonify(instance.to_dict()), 201)
 
 
