@@ -70,7 +70,7 @@ def delete_state(task_id):
 
 
 @app_views.route('/task', methods=['POST'], strict_slashes=False)
-#@swag_from('documentation/task/post_state.yml', methods=['POST'])
+#@swag_from('documentation/task/create_task.yml', methods=['POST'])
 @jwt_required()
 def post_task():
     """
