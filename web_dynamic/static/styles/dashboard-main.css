@@ -257,7 +257,7 @@
 
 /* Show a checkmark when the checkbox is checked */
 .checked {
-    background-color: #004d7300;
+    background-color: #004D73;
     border-color: #004D73;
     font-size: 12px;
     color: #fff;
@@ -269,6 +269,11 @@
     padding: 6px;
     background-image: url(../images/check-solid.svg);
     background-repeat: no-repeat;
+}
+
+.important {
+    color: #004D73;
+    font-size: 18px;
 }
 
 .taskName {

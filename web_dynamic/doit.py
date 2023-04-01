@@ -59,6 +59,7 @@ def dashboard(user_id=None):
     #user_id = get_jwt_identity()
     #user_id = "7c0e2414-f68c-494c-ac98-5cffce577861"
     list_folder = []
+    list_folder2 = []
     
     for folder in all_folder:
         list_folder.append(folder.to_dict())
@@ -68,13 +69,17 @@ def dashboard(user_id=None):
     completed = find_object_by_name(list_folder, "completed")
     task = find_object_by_name(list_folder, "task")
     
+    for folder in all_folder:
+        if folder.id not in (important, alla, completed, task):
+            list_folder2.append(folder.to_dict())
+    
     return render_template('dashboard.html',
                            cache_id=uuid.uuid4(),
                            important=important,
                            all=alla,
                            completed=completed,
                            task=task,
-                           obj =list_folder)
+                           obj =list_folder2)
 
 JWTManager(app)
 if __name__ == "__main__":

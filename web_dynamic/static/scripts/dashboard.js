@@ -7,6 +7,9 @@ $(() => {
   let data = JSON.parse(jsonData);
   let jwt = data.user.access;
 
+  $(".name").text(data.user.full_name)
+  $(".email").text(data.user.email)
+
   check()
   function openNav() {
     $(".leftmenu").css("width", "350px");
@@ -48,13 +51,14 @@ $(() => {
 
       <div>
         <p class="dueDate">${dueDate}</p>
-        <div name="important" class="important checkbox ${checked}"></div>
+        <i class="important fa-regular fa-star"></i>
       </div>
     </div>
     `)
 
     taskob.click(details);
     taskob.find(".checkbox").click(checkBox);
+    taskob.find(".important").click(important);
     return taskob
   }
 
@@ -66,7 +70,7 @@ $(() => {
 			</li>
     `)
 
-    //taskob.click(details);
+    taskob.click(folder);
     //taskob.find(".checkbox").click(checkBox);
     return taskob
   }
@@ -100,8 +104,8 @@ $(() => {
 
     $(this).toggleClass('checked');//////////////////////////////////////
     if (this.classList[0] == "tick") {
-      /*$(this).html('&#10003');///////////////////////////////////////////*/
-      await waitFor(300);
+      ///////////////////////////////////////////
+      await waitFor(250);
       let item
 
       if ($(this).parents().is('#unchecked')) {
@@ -129,6 +133,50 @@ $(() => {
 
   }
 
+  //Function to be called when Important is clicked
+  async function important() {
+    $(this).toggleClass('fa-regular fa-solid');//////////////////////////////////////
+    if (this.classList[0] == "important") {
+      ///////////////////////////////////////////
+      await waitFor(250);
+      let item = $(this.parentElement.parentElement)
+
+      if ($(this).hasClass('fa-regular')) {
+        console.log(item.data('id'))
+        let item_id = item.data('id');
+        let taskName = item.data('task');
+        let upTask = { "is_important": 0, "task_name": taskName }
+        //console.log(upTask);
+        //The selected element is a child of the parent element.
+        updateTask(upTask, item_id)
+      } else if ($(this).hasClass('fa-solid')) {
+        let item_id = item.data('id');
+        let taskName = item.data('task');
+        let upTask = { "is_important": 1, "task_name": taskName }
+        //console.log(upTask);
+        //The selected element is a child of the parent element.
+        updateTask(upTask, item_id)
+      }
+
+    }
+  }
+
+  function folder(event) {
+    let folderId = $(this).data("id")
+    // If the clicked li already has active class, do nothing
+    console.log(`folder: ${folderId}`)
+    if ($(this).hasClass('active')) return;
+
+    // Otherwise remove active class from all li tags and add it to the clicked one
+    $('.folders li.active').removeClass('active');
+    $(this).addClass('active');
+    //console.log($(this).text());
+    let data = getFolderTask(folderId);
+    updateFolderNameAndId(folderId, $(this).text());
+    renderTasks(data);
+    updateDone();
+  }
+
   function updateTask(jsonData, task_id) {
     let link = baseUrl + `/task/${task_id}`;
     $.ajax({
@@ -141,12 +189,12 @@ $(() => {
       contentType: 'application/json',
       data: JSON.stringify(jsonData),
       success: function (response) {
-        // handle success response
+        //handle success response
         //console.log(response);
         return response;
       },
       error: function (xhr, textStatus, errorThrown) {
-        // handle error response
+        //handle error response
         //alert(xhr.responseJSON);
       }
     });
@@ -174,7 +222,6 @@ $(() => {
       success: function (response) {
         // handle success response
         res = response;
-        console.log(response);
       },
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
@@ -202,7 +249,7 @@ $(() => {
       success: function (response) {
         // handle success response
         res = response;
-        console.log(response);
+        //console.log(response);
       },
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
@@ -236,7 +283,6 @@ $(() => {
       }
     });
 
-    //console.log(res);
     return res
   }
 
@@ -246,6 +292,11 @@ $(() => {
       $('#checked').empty();
       data.forEach(element => {
         let item = newTask(element.task_name, element.id, element.position);
+
+        if (element.is_important) { 
+          item.find(".important").toggleClass('fa-regular fa-solid');
+        }
+
         if (element.is_checked) {
           item.find(".tick").addClass('checked');
           $('#checked').prepend(item);
@@ -258,13 +309,12 @@ $(() => {
       $('#checked').empty();
     }
 
-    //$('#checked')
-    //$('#unchecked')
   }
 
   function updateFolderNameAndId(folderId, folderName) {
+    console.log(`updateFolderNameAndId: ${folderId}`)
     $(".foldername").text(folderName);
-    $(".foldername").attr("data-folderid", folderId);
+    $(".foldername").data("folderid", folderId);
   }
 
   $("#addTask").on("keydown", function (event) {
@@ -272,16 +322,19 @@ $(() => {
       let valueJson = {};
       valueJson.task_name = $("#addTask").val();
       valueJson.folder_id = $(".foldername").data("folderid");
+      console.log(`#addTask: ${valueJson.folder_id}`)
       $("#addTask").val("");
       //console.log(task.find(".task").prevObject[0]);
-      //console.log(valueJson)
+      console.log(valueJson)
       let res = sendTask(valueJson);
+      console.log(res)
       let task = newTask(res.task_name, res.id, res.position);
       //task.click(details);
       //task.find(".checkbox").click(checkBox);
       // Enter key pressed
       $('#unchecked').prepend(task);
-      //console.log(value)
+      valueJson.task_name = "";
+      valueJson.folder_id = "";
       // Do something here, such as submit the form or trigger a button click event
     }
   });
@@ -319,25 +372,18 @@ $(() => {
       valueJson.folder_name = $("#addList").val();
       $("#addList").val("");
       //console.log(task.find(".task").prevObject[0]);
-      //console.log(valueJson)
       let res = sendFolder(valueJson);
       let list = newFolder(res.folder_name, res.id, res.position);
       //task.click(details);
       //task.find(".checkbox").click(checkBox);
       // Enter key pressed
-      console.log(list[0])
-      $('.folders').prepend(list);
+      //console.log(list[0])
+      $('.lists .folders').prepend(list);
       //console.log(value)
       // Do something here, such as submit the form or trigger a button click event
     }
   });
-  /*$('#unchecked.task').click(function() {
-    // detach the clicked item from list1
-    var item = $(this).detach();
-    
-    // append the detached item to list2
-    $('#checked').append(item);
-  });*/
+
   $("#unchecked").sortable({
     stop: function (event, ui) {
       //console.clear();
@@ -377,22 +423,9 @@ $(() => {
   });
 
   $("#unchecked").disableSelection();
-  $("#hecked").disableSelection();
+  $("#checked").disableSelection();
 
-  $('.folders li').click(function () {
-    let folderId = $(this).data("id")
-    // If the clicked li already has active class, do nothing
-    if ($(this).hasClass('active')) return;
+  $('.folders li').click(folder);
 
-    // Otherwise remove active class from all li tags and add it to the clicked one
-    $('.folders li.active').removeClass('active');
-    $(this).addClass('active');
-    //console.log($(this).text());
-    let data = getFolderTask(folderId);
-    updateFolderNameAndId(folderId, $(this).text());
-    renderTasks(data);
-    updateDone();
-  });
-
-  $('.folders li:first').click();
+  $('.fol>li:first').click();
 });
