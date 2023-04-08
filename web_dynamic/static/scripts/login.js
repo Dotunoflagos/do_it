@@ -1,9 +1,11 @@
 $(() => {
-  const emailval = JSON.parse(localStorage.getItem('user')).email;
-  if (emailval) {
-    $('#email').val(emailval);
+  if (localStorage.hasOwnProperty("user")) {
+    const emailval = JSON.parse(localStorage.getItem('user')).email;
+    if (emailval) {
+      $('#email').val(emailval);
+    }
   }
-  const linkbody = 'http://172.29.67.181:5001/api/v1'
+  const linkbody = 'http://127.0.0.1:5001/api/v1'
   $('.eye').mousedown(function () {
     $('#password').attr('type', 'text');
   }).mouseup(function () {
