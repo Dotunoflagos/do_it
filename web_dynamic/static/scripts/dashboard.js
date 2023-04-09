@@ -142,7 +142,7 @@ $(() => {
       let item = $(this.parentElement.parentElement)
 
       if ($(this).hasClass('fa-regular')) {
-        console.log(item.data('id'))
+        //console.log(item.data('id'))
         let item_id = item.data('id');
         let taskName = item.data('task');
         let upTask = { "is_important": 0, "task_name": taskName }
@@ -164,7 +164,7 @@ $(() => {
   function folder(event) {
     let folderId = $(this).data("id")
     // If the clicked li already has active class, do nothing
-    console.log(`folder: ${folderId}`)
+    //console.log(`folder: ${folderId}`)
     if ($(this).hasClass('active')) return;
 
     // Otherwise remove active class from all li tags and add it to the clicked one
@@ -312,7 +312,7 @@ $(() => {
   }
 
   function updateFolderNameAndId(folderId, folderName) {
-    console.log(`updateFolderNameAndId: ${folderId}`)
+    //console.log(`updateFolderNameAndId: ${folderId}`)
     $(".foldername").text(folderName);
     $(".foldername").data("folderid", folderId);
   }
@@ -322,12 +322,12 @@ $(() => {
       let valueJson = {};
       valueJson.task_name = $("#addTask").val();
       valueJson.folder_id = $(".foldername").data("folderid");
-      console.log(`#addTask: ${valueJson.folder_id}`)
+      //console.log(`#addTask: ${valueJson.folder_id}`)
       $("#addTask").val("");
       //console.log(task.find(".task").prevObject[0]);
-      console.log(valueJson)
+      //console.log(valueJson)
       let res = sendTask(valueJson);
-      console.log(res)
+      //console.log(res)
       let task = newTask(res.task_name, res.id, res.position);
       //task.click(details);
       //task.find(".checkbox").click(checkBox);
@@ -362,7 +362,7 @@ $(() => {
       }
     });
 
-    console.log(res);
+    //console.log(res);
     return res
   }
 

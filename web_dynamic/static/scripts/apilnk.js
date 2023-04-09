@@ -1,0 +1,1 @@
+export const apiurl = "172.30.90.207:5001/api/v1";
