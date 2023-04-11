@@ -1,4 +1,5 @@
 import { baseUrl } from './apilnk.js';
+import { loadr } from './loader.js';
 
 $(() => {
   //console.log(baseUrl);
@@ -34,12 +35,14 @@ $(() => {
       }
     });
 
-
+    //Start loader
+    loadr(1);
     // send a POST request to the server with the form data
     $.ajax({
       url: link,
       dataType: 'json',
       type: 'POST',
+      async: false,
       contentType: 'application/json',
       data: JSON.stringify(jsonData),
       success: function (response) {
@@ -65,5 +68,7 @@ $(() => {
         message.text(error);
       }
     });
+    //End loader
+    loadr();
   });
 });

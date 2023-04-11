@@ -1,4 +1,5 @@
 import { baseUrl } from './apilnk.js';
+import { loadr } from './loader.js';
 
 $(() => {
   if (localStorage.hasOwnProperty("user")) {
@@ -38,12 +39,14 @@ $(() => {
         jsonData[this.name] = this.value || '';
       }
     });
-
+    //Start loader
+    loadr(1);
     // send a POST request to the server with the form data
     $.ajax({
       url: link,
       dataType: 'json',
       type: 'POST',
+      async: false,
       contentType: 'application/json',
       data: JSON.stringify(jsonData),
       success: function (response) {
@@ -58,6 +61,7 @@ $(() => {
         const baseUrl = window.location.origin;
         const link = "/dashboard/" + id
         //redirect after 3sec
+        loadr(1);
         message.css('color', 'green');
         message.text('Logging in...');
         setTimeout(function () {
@@ -72,5 +76,7 @@ $(() => {
         message.text(xhr.responseJSON.error);
       }
     });
+    //End loader
+    loadr();
   });
 });
