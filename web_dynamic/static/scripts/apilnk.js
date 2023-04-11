@@ -1,1 +1,4 @@
-export const apiurl = "172.30.90.207:5001/api/v1";
+var baseUrl = window.location.origin + "/api/v1";
+const port = "5001";
+baseUrl = baseUrl.replace("5000", port)
+export { baseUrl }

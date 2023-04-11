@@ -1,3 +1,5 @@
+import { baseUrl } from './apilnk.js';
+
 $(() => {
   if (localStorage.hasOwnProperty("user")) {
     const emailval = JSON.parse(localStorage.getItem('user')).email;
@@ -5,7 +7,8 @@ $(() => {
       $('#email').val(emailval);
     }
   }
-  const linkbody = 'http://127.0.0.1:5001/api/v1'
+  //const linkbody = 'http://127.0.0.1:5001/api/v1'
+  const linkbody = baseUrl
   $('.eye').mousedown(function () {
     $('#password').attr('type', 'text');
   }).mouseup(function () {

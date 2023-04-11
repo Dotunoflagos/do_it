@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css?{{ cache_id }}">
     <script src="//code.jquery.com/jquery-3.2.1.min.js?{{ cache_id }}"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js?{{ cache_id }}"></script>
-	<script src="../static/scripts/dashboard.js?{{ cache_id }}"></script>
+	<script src="../static/scripts/dashboard.js?{{ cache_id }}" type="module"></script>
 	<title>Dashboard</title>
 </head>
 
@@ -72,47 +72,13 @@
 				<h1 class="foldername">Important</h1>
 				<div class="allTask">
 					<div id="unchecked">
-						<div class="task">
-							<div>
-								<div name="tick" class="tick checkbox"></div>
-								<p class="taskName">Read a book</p>
-							</div>
-
-							<div>
-								<p class="dueDate">Fri, Nov 19, 2022</p>
-								<div name="important" class="important starbox"></div>
-							</div>
-						</div>
-
-						<div class="task">
-							<div>
-								<div name="tick" class="tick checkbox"></div>
-								<p class="taskName">Read a book</p>
-							</div>
-
-							<div>
-								<p class="dueDate">Fri, Nov 19, 2023</p>
-								<div name="important" class="important checkbox"></div>
-							</div>
-						</div>
-
-						<div class="task">
-							<div>
-								<div name="tick" class="tick checkbox"></div>
-								<p class="taskName">dance a dance dance</p>
-							</div>
-
-							<div>
-								<p class="dueDate">Fri, Nov 19, 2023</p>
-								<div name="important" class="important checkbox"></div>
-							</div>
-						</div>
 
 					</div>
 					<div class="completedbtn">
 						<p>Completed <span id="done"></span></p>
 					</div>
 					<div id="checked">
+
 					</div>
 				</div>
 

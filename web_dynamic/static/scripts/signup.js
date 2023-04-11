@@ -1,5 +1,9 @@
+import { baseUrl } from './apilnk.js';
+
 $(() => {
-  const linkbody = 'http://172.29.67.181:5001/api/v1'
+  //console.log(baseUrl);
+  //const linkbody = 'http://172.29.67.181:5001/api/v1'
+  const linkbody = baseUrl
   $('.eye').mousedown(function () {
     $('#password').attr('type', 'text');
   }).mouseup(function () {
