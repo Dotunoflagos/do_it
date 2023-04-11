@@ -1,4 +1,10 @@
 import { baseUrl } from './apilnk.js';
+var token = localStorage.getItem("user");
+
+if (!token) {
+  // Redirect to login page if token is not present
+  window.location.href = "/login";
+}
 
 $(() => {
   /*var baseUrl = window.location.origin + "/api/v1";
@@ -295,7 +301,7 @@ $(() => {
       data.forEach(element => {
         let item = newTask(element.task_name, element.id, element.position);
 
-        if (element.is_important) { 
+        if (element.is_important) {
           item.find(".important").toggleClass('fa-regular fa-solid');
         }
 
@@ -422,6 +428,13 @@ $(() => {
       });
       //console.log(positions);
     }
+  });
+  const logoutButton = $('.logout');
+
+  logoutButton.on('click', () => {
+    localStorage.removeItem('user');
+    // Redirect the user to the login page or other unauthenticated route
+    window.location.href = "/login";
   });
 
   $("#unchecked").disableSelection();

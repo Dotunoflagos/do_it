@@ -138,14 +138,30 @@
     margin-bottom: 20px;
 }
 
-/**Todo area*/
+/**Todo area*//*
 .tadoarea .openbtn {
     position: absolute;
     top: 0;
     left: 40px;
     font-size: 23px !important;
-    /*margin-left: 50px;*/
     padding-top: 8px;
+}*/
+.closelogout {
+    display: flex;
+    /* width: 100%; */
+    justify-content: space-between;
+    margin: 4px 40px 0;
+    align-items: baseline;
+}
+.logout{
+    text-decoration: none;
+    color: inherit;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.logout:hover{
+    color: #00ced1;
 }
 
 .tadoarea {
@@ -179,7 +195,7 @@
 
 .searchBarContainer {
     position: relative;
-    margin: 40px 40px 0;
+    margin: 0px 40px 0;
 }
 
 .addBarContainer {

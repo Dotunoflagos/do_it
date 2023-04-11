@@ -60,11 +60,11 @@ def login_user():
     """ Loguser in """
     email = request.json.get('email', None)
     password = request.json.get('password', None)
-    if email is None or password is None:
+    if email is None or password is None or email == "" or password == "":
         # missing arguments
-        abort(400, description="Missing email or password")
+        return jsonify({'error': "Missing email or Password"}), 400
     if storage.get_user_by_email(email) is None:
-        abort(400, description="Use dosent exist")    # existing user
+        return jsonify({'error': "User dosent exist"}), 401    # existing user
 
     user = storage.get_user_by_email(email)
 
@@ -73,7 +73,7 @@ def login_user():
         # print(token)
         return jsonify(token)
     else:
-        abort(401, description="invalied credentials")
+        return jsonify({'error': "Invallied credentials"}), 400
 
 
 @app_views.route('/users', methods=['DELETE'],

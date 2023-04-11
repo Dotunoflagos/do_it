@@ -56,18 +56,20 @@ $(() => {
         let id = data.user.id;
         //get base url
         const baseUrl = window.location.origin;
-        const link = baseUrl + "/dashboard/" + id
+        const link = "/dashboard/" + id
         //redirect after 3sec
         message.css('color', 'green');
         message.text('Logging in...');
         setTimeout(function () {
           window.location = link;
-        }, 800);
+        }, 500);
         //console.log(response);
       },
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
-        alert(xhr.responseJSON.error);
+        //alert(xhr.responseJSON.error);
+        message.css('color', 'red');
+        message.text(xhr.responseJSON.error);
       }
     });
   });
