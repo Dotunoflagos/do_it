@@ -5,3 +5,5 @@ Flask_JWT_Extended==4.4.4
 itsdangerous==2.1.2
 requests==2.22.0
 SQLAlchemy==2.0.5.post1
+mysql-connector-python==8.0.32
+python-dotenv==1.0.0
