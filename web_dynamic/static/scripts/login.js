@@ -61,22 +61,26 @@ $(() => {
         const baseUrl = window.location.origin;
         const link = "/dashboard/" + id
         //redirect after 3sec
-        loadr(1);
+        //loadr(1);
         message.css('color', 'green');
         message.text('Logging in...');
         setTimeout(function () {
+          loadr();
           window.location = link;
-        }, 500);
+        }, 1000);
         //console.log(response);
       },
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
         //alert(xhr.responseJSON.error);
-        message.css('color', 'red');
-        message.text(xhr.responseJSON.error);
+        setTimeout(function () {
+          loadr();
+          message.css('color', 'red');
+          message.text(xhr.responseJSON.error);
+        }, 1000);
       }
     });
     //End loader
-    loadr();
+    //loadr();
   });
 });

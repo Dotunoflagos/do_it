@@ -37,7 +37,7 @@ def get_folders_task(folder_id):
     task_in_folder = storage.get_task_by_folder_id_or_user_id(Folder, folder_id)
     list_task_in_folder = []
     for task in task_in_folder:
-        list_task_in_folder.append(task.to_dict())
+        list_task_in_folder.append(task.toggle_case("U").to_dict())
     return jsonify(list_task_in_folder)
 
 
@@ -54,6 +54,11 @@ def delete_place(folder_id):
 
     if not folder:
         abort(404)
+
+    task_in_folder = storage.get_task_by_folder_id_or_user_id(Folder, folder_id)
+    for task in task_in_folder:
+         storage.delete(task)
+         storage.save()
 
     storage.delete(folder)
     storage.save()
@@ -87,7 +92,7 @@ def post_place():
     data["user_id"] = user_id
     data["position"] = Folder.set_folder_position(user_id)
     instance = Folder(**data)
-    instance.save()
+    instance.toggle_case("U").save()
     return make_response(jsonify(instance.to_dict()), 201)
 
 
@@ -121,5 +126,5 @@ def put_place(folder_id):
     for key, value in data.items():
         if key not in ignore:
             setattr(folder, key, value)
-    folder.save()
+    folder.toggle_case("U").save()
     return make_response(jsonify(folder.to_dict()), 200)

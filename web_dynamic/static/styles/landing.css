@@ -19,12 +19,20 @@ h2 {
     font-family:
         /*'Tenor Sans'*/
         'Jost', 'Roboto', sans-serif;
-    font-weight: 200;
+    /*font-weight: 200;*/
     color: white;
     border-radius: 8px;
     padding: 6px 45px;
     background-color: #2222220f;
     backdrop-filter: blur(5px);
+    margin: 0px;
+    text-align: center;
+}
+
+.hero_body .container {
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .hero_body img {
@@ -98,33 +106,35 @@ h2 {
         #ffbf47;
 }
 
-.about p {
+/*.about p {
     width: 800px;
-}
+}*/
 
-.features, .contactus{
-    display: flex;
+.features,
+.contactus {
+    /*display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+    flex-direction: column;*/
     padding: 80px;
 }
 
 
-.features :nth-child(1) {
+/*.features :nth-child(1) {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+}*/
 
 .features>:nth-child(1) p {
-    display: flex;
+    /*display: flex;
     justify-content: center;
     align-items: center;
-    width: 800px;
-    padding-bottom: 80px;
+    width: 800px;*/
+    padding-bottom: 50px;
 }
 
+/*
 .features>:nth-child(2) {
     display: flex;
     justify-content: center;
@@ -140,12 +150,67 @@ h2 {
     padding: 20px;
     border-radius: 12px;
     margin: 0 10px;
-    width: 300px;
-    min-height: 330px;
-}
+    /*width: 300px;*/
+/* min-height: 330px;
+}*/
 
 .features>:nth-child(2) div i {
-    color: #004D73;
-    font-size: 79px;
-    margin: 35px 0;
+    display: inline;
+    color: #ffbf47;
+    font-size: 23px;
+    margin: 0 10px 0;
+}
+
+.features>:nth-child(2) div img {
+    height: 400px;
+    border-radius: 20px;
+    box-shadow: rgb(0 0 0 / 11%) 0px 20px 40px 12px;
+    padding: 12px;
+}
+
+.navbar {
+    background: rgba(0, 0, 0, 0.164);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-nav {
+    margin-left: auto;
+}
+
+.nav-link {
+    color: #fff;
+}
+
+.doitlogo {
+    height: 40px;
+}
+
+.features h3 {
+    display: inline;
+}
+
+.image-container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0px;
+}
+
+.pmov {
+    width: 100%;
+    min-height: 244px;
+    overflow: hidden;
+    flex-flow: wrap;
+    display: flex;
+    flex-flow: column;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.backb {
+    background-color: blueviolet;
+    padding: 10px 0;
+    /*#004D73*/
 }

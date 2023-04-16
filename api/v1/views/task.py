@@ -33,7 +33,7 @@ def get_states_by_uid():
     task_in_folder = storage.get_task_by_folder_id_or_user_id(Task, user_id)
     list_task_in_folder = []
     for task in task_in_folder:
-        list_task_in_folder.append(task.to_dict())
+        list_task_in_folder.append(task.toggle_case("L").to_dict())
     return jsonify(list_task_in_folder)
 
 
@@ -46,7 +46,7 @@ def get_state(task_id):
     if not task:
         abort(404)
 
-    return jsonify(task.to_dict())
+    return jsonify(task.toggle_case("U").to_dict())
 
 
 @app_views.route('/task/<task_id>', methods=['DELETE'],
@@ -94,7 +94,7 @@ def post_task():
     data["user_id"] = user_id
     data["position"] = Task.set_task_position(Folder, data["folder_id"])
     instance = Task(**data)
-    instance.save()
+    instance.toggle_case("U").save()
     return make_response(jsonify(instance.to_dict()), 201)
 
 
@@ -113,18 +113,21 @@ def put_state(task_id):
     if not request.get_json():
         abort(400, description="Not a JSON")
 
-    ignore = ['id', 'created_at', 'updated_at']
+    ignore = ['id', 'created_at', 'updated_at', 'from']
     user_id = get_jwt_identity()
     data = request.get_json()
-    if not task.task_name == data["task_name"]:
-        task_name = request.json.get('task_name', "")
+    
+    print(request.json.get('from', "False"))
+    if not request.json.get('from', False):
+        if not task.task_name == data["task_name"]:
+            task_name = request.json.get('task_name', "")
 
-        data["task_name"] = Task.rename(Task, user_id, task_name)
-        if type(data["task_name"]) == dict and jsonify(data["task_name"]).json.get('error', False):
-            return make_response({"error": jsonify(data["task_name"]).json.get("error")}, 406)
+            data["task_name"] = Task.rename(Task, data["folder_id"], task_name)
+            if type(data["task_name"]) == dict and jsonify(data["task_name"]).json.get('error', False):
+                return make_response({"error": jsonify(data["task_name"]).json.get("error")}, 406)
 
     for key, value in data.items():
         if key not in ignore:
             setattr(task, key, value)
-    task.save()
+    task.toggle_case("U").save()
     return make_response(jsonify(task.to_dict()), 200)

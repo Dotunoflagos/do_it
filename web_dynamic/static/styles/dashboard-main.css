@@ -5,7 +5,8 @@
 /*Left menu*/
 .leftmenu {
     width: 350px;
-    background-color: #FFF9F1;
+    /*background-color: #FFF9F1;*/
+    background-color: #ffffff;
     box-shadow: rgba(0, 0, 0, 0.1) 3px 0 3px 0px;
     height: 100%;
     /* 100% Full-height */
@@ -41,7 +42,7 @@
     right: -5px;
     width: 100%;
     z-index: 1;
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255 249 241) 100%);
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%);
     height: 30px;
 }
 
@@ -102,7 +103,7 @@
     height: 60px;
     width: 60px;
     border-radius: 50px;
-    background-color: #004D73;
+    background-color: /*#004d73*/rgb(75, 73, 77);
 }
 
 .names {
@@ -119,14 +120,27 @@
     font-size: 11px;
 }
 
-.active {
-    background-color: #FFFFFF;
-    padding-bottom: 15px !important;
-    border-bottom: 3px solid #00ced1 !important;
+/*.active {*/
+    /*background-color: #FFFFFF;*/
+    /*padding-bottom: 15px !important;
+    border-bottom: 3px solid #00ced1 !important;*/
+/*}*/
+
+.selfol {
+    height: 20px;
+    width: 5px;
+    border-radius: 5px;
+    background-color: blueviolet;
+    content: '';
+    left: 0;
+    margin-left: 25px;
+    position: absolute;
+    transition: translate .06s;
+    translate: -32px
 }
 
 .active i {
-    color: #00ced1;
+    color: /*#ffbf47*/#ffaf18;
 }
 
 .folders h2 {
@@ -138,7 +152,8 @@
     margin-bottom: 20px;
 }
 
-/**Todo area*//*
+/**Todo area*/
+/*
 .tadoarea .openbtn {
     position: absolute;
     top: 0;
@@ -153,15 +168,22 @@
     margin: 4px 40px 0;
     align-items: baseline;
 }
-.logout{
+
+.logout {
     text-decoration: none;
-    color: inherit;
-    font-size: 18px;
+    color: white;
+    font-size: 16px;
     cursor: pointer;
 }
 
-.logout:hover{
-    color: #00ced1;
+.rbtn {
+    background-color: /*#004d73*/blueviolet;
+    padding: 5px 13px;;
+    border-radius: 50px;
+}
+
+.rbtn:hover {
+    opacity: 90%;
 }
 
 .tadoarea {
@@ -177,9 +199,9 @@
     width: -webkit-fill-available;
     height: -webkit-fill-available;
     position: relative;
-    margin-right: 350px;
-    /*margin-right: 0px;
+    /*margin-right: 350px;
     padding: 40px;*/
+    margin-right: 0px;
 }
 
 .searchbar {
@@ -211,8 +233,13 @@
     left: 0;
 }
 
-.foldername {
+.folderdelete {
+    display: flex;
     margin: 20px 40px 0;
+}
+
+.folderdelete .delete {
+    margin-left: 20px;
 }
 
 /*#unchecked {
@@ -231,6 +258,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 1px 3px 0px;
 }
 
 .allTask {
@@ -273,8 +301,8 @@
 
 /* Show a checkmark when the checkbox is checked */
 .checked {
-    background-color: #004D73;
-    border-color: #004D73;
+    background-color: /*#004d73*/blueviolet;
+    border-color: /*#004d73*/blueviolet;
     font-size: 12px;
     color: #fff;
     text-align: center;
@@ -288,7 +316,7 @@
 }
 
 .important {
-    color: #004D73;
+    color: /*#004d73*/blueviolet;
     font-size: 18px;
 }
 
@@ -315,8 +343,8 @@
 
 /*right */
 .details {
-    width: 350px;
-    /*width: 0px;*/
+    /*width: 350px;*/
+    width: 0px;
     background-color: #ffffff;
     height: 100%;
     /* 100% Full-height */
@@ -337,7 +365,7 @@
 }
 
 .details a {
-    padding: 8px 8px 8px 32px;
+    margin: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 30px !important;
     color: #333333;
@@ -345,10 +373,99 @@
     /*transition: 0.3s;*/
 }
 
+.details #task_name {
+    border: none;
+    font-size: 24px;
+    font-weight: 600;
+    outline: none;
+    min-width: 10px;
+    flex-grow: 1;
+}
+
+#myTextarea {
+    width: 100%;
+    min-height: 200px;
+    resize: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    background-color: #fdfdfd;
+    color: #6a6a6a;
+    padding: 15px;
+    box-shadow: inset rgb(0, 0, 0, 0.1) 2px 2px 3px 0px;
+    font-family: inherit;
+}
+
 .details .detailsbtn {
     position: absolute;
     top: 0;
-    right: 25px;
+    right: 31px;
     font-size: 36px;
-    margin-left: 50px;
+    /*margin-left: 50px;*/
+}
+
+.dateInput {
+    /* Modify the width and height of the input element */
+    width: 100%;
+    height: 40px;
+
+    /* Change the background color */
+    background-color: #f2f2f2;
+
+    /* Add padding and border */
+    padding: 10px;
+    border: 1px solid #ccc;
+
+    /* Change the font family and size */
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+
+    /* Change the color of the text */
+    color: #333;
+
+    /* Add rounded corners */
+    border-radius: 5px;
+
+    outline: none;
+}
+
+.details>div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 40px;
+}
+
+.taskselected {
+    background-color: #fff9f1;
+    box-shadow: rgb(0, 0, 0, 0.1) 4px 4px 3px 0px;
+}
+
+.namddelete {
+    display: flex;
+    width: 100%;
+}
+
+.delete {
+    flex-wrap: wrap;
+    align-content: center;
+    margin-top: 6px;
+    font-size: 20px;
+    color: /*#ffbf47*/#ffaf18;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.detailsbod .us {
+    padding-top: 20px;
+}
+
+.detailsbod .us>div {
+    padding-bottom: 8px;
+    font-size: 18px;
+}
+
+#addList {
+    margin-bottom: 40px;
 }

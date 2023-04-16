@@ -110,7 +110,7 @@ class BaseModel:
             except Exception as e:
                 return {"error": str(e)}
         return oldname
-    
+
     @staticmethod
     def set_task_position(cls, id=None):
         no = 1
@@ -119,7 +119,7 @@ class BaseModel:
             if objs:
                 no = len(objs) + 1
         return no
-    
+
     @staticmethod
     def set_folder_position(id=None):
         no = 1
@@ -128,3 +128,28 @@ class BaseModel:
             if objs:
                 no = len(objs) + 1
         return no
+
+
+    def toggle_case(self, flag):
+        clss = {"Folder": "folder_name", "Task": "task_name"}
+        clasz = type(self).__name__
+        word = eval(f'self.{clss[clasz]}')
+        first_letter = word[0]
+        rest_of_word = word[1:]
+
+        if flag == 'U':
+            self.__dict__[clss[clasz]] =  first_letter.upper() + rest_of_word
+            return self
+        elif flag == 'L':
+            self.__dict__[clss[clasz]] =  first_letter.lower() + rest_of_word
+            return self
+        elif flag == 'A':
+            if first_letter == first_letter.lower():
+                first_letter = first_letter.upper()
+            else:
+                first_letter = first_letter.lower()
+            self.__dict__[clss[clasz]] = first_letter + rest_of_word
+            return self
+        else:
+            self.__dict__[clss[clasz]] = word
+            return self

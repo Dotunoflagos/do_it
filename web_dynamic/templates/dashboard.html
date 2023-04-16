@@ -11,6 +11,9 @@
     <script src="//code.jquery.com/jquery-3.2.1.min.js?{{ cache_id }}"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js?{{ cache_id }}"></script>
 	<script src="../static/scripts/dashboard.js?{{ cache_id }}" type="module"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js?{{ cache_id }}"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css?{{ cache_id }}">
 	<title>Dashboard</title>
 </head>
 
@@ -58,7 +61,7 @@
 				</ul>
 			</div>
 			<div class="newFolder">
-				<input type="text" class="searchbar" placeholder="Add leat" id="addList">
+				<input type="text" class="searchbar" placeholder="Add least" id="addList">
 				<i class="fa-solid fa-plus glass"></i>
 			</div>
 		</div>
@@ -66,13 +69,16 @@
 			<div class="todos">
 				<div class="closelogout">
 					<span style="font-size:30px;cursor:pointer" class="openbtn">&#9776;</span>
-					<a class="logout">Logout</a>
+					<a class="logout rbtn">Logout</a>
 				</div>
 				<div class="searchBarContainer">
 					<input type="text" class="searchbar" placeholder="Search">
 					<i class="fa-solid fa-magnifying-glass glass"></i>
 				</div>
-				<h1 class="foldername">Important</h1>
+				<div class="folderdelete">
+					<h1 class="foldername">Important</h1>
+					<i class="delete fa-sharp fa-solid fa-trash"></i>
+				</div>
 				<div class="allTask">
 					<div id="unchecked">
 
@@ -92,6 +98,24 @@
 			</div>
 			<div class="details">
 				<a href="javascript:void(0)" class="detailsbtn">&times;</a>
+				<div class="detailsbod">
+					<div class="namddelete">
+						<div contenteditable="true" type="text" wrap="soft" name="task_name" id="task_name" class="task_name taskdetails" autocomplete="off"></div>
+						<i class="delete fa-sharp fa-solid fa-trash"></i>
+					</div>
+					<div class="us remindme">
+						<div class="remind">Remind Me</div>
+						<input type="date" name="reminder" id="reminder" class="dateInput taskdetails">
+					</div>
+					<div class="us duedate">
+						<div class="due">Due date</div>
+						<input type="date" name="due_date" id="due_date" class="dateInput taskdetails">
+					</div>
+					<div class="us textarea">
+						<div class="myTextarea">Notes</div>
+  						<textarea id="myTextarea" name="task_description" class="myTextarea taskdetails"></textarea>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

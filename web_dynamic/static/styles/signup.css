@@ -68,7 +68,7 @@ body {
     color: #f3f3f3;
     border-radius: 8px;
     border-style: none;
-    background-color: #004D73;
+    background-color: /*#004d73*/blueviolet;
     width: -webkit-fill-available;
     cursor: pointer;
 }
@@ -129,8 +129,8 @@ body {
     width: 0%;
     border-radius: 50px;
     height: 13%;
-    background-color: #004d73;
-    animation: progress 2s cubic-bezier(0.55, 0, 0.42, 0.99) infinite;
+    background-color: /*#004d73*/blueviolet;
+    animation: progress 1s cubic-bezier(0.55, 0, 0.42, 0.99) infinite;
 }
 
 @keyframes progress {

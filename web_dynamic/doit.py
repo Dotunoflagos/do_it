@@ -68,7 +68,7 @@ def dashboard(user_id=None):
     alla = find_object_by_name(list_folder, "all")
     completed = find_object_by_name(list_folder, "completed")
     task = find_object_by_name(list_folder, "task")
-    
+    print(list_folder)
     for folder in all_folder:
         if folder.id not in (important, alla, completed, task):
             list_folder2.append(folder.to_dict())
@@ -84,4 +84,4 @@ def dashboard(user_id=None):
 JWTManager(app)
 if __name__ == "__main__":
     """ Main Function """
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)

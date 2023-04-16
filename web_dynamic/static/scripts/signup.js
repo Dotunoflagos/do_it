@@ -57,18 +57,22 @@ $(() => {
         message.css('color', 'green');
         message.text('Account created redirecting...');
         setTimeout(function () {
+          loadr();
           window.location.href = baseUrl + "/login/";
-        }, 3000);
+        }, 1000);
         //console.log(JSON.parse(localStorage.getItem('user')).email);
       },
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
         let error = xhr.responseJSON.error;
-        message.css('color', 'red');
-        message.text(error);
+        setTimeout(function () {
+          loadr();
+          message.css('color', 'red');
+          message.text(error);
+        }, 1000);
       }
     });
     //End loader
-    loadr();
+    //loadr();
   });
 });

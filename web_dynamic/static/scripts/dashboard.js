@@ -85,6 +85,41 @@ $(() => {
 
   $(".detailsbtn").click(closedetails)
 
+  //Function Gets task data
+  function getask(task_id) {
+    let link = baseUrl + `/task/${task_id}`;
+    let res
+
+    $.ajax({
+      url: link,
+      async: false,
+      headers: {
+        'Authorization': 'Bearer ' + jwt
+      },
+      type: 'GET',
+      success: function (response) {
+        // handle success response
+        res = response;
+        //console.log(response);
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        // handle error response
+        console.log(xhr.responseJSON + " err");
+      }
+    });
+
+    return res
+  }
+
+  function taskselect(obj, clss) {
+    // If the clicked li already has active class, do nothing
+    //console.log(`folder: ${folderId}`)
+    if ($(obj).hasClass(clss)) return;
+    // Otherwise remove active class from all li tags and add it to the clicked one
+    $('.allTask .task').removeClass(clss);
+    $(obj).addClass(clss);
+  }
+
   //Function to expand and collaps details section on the right
   function details(event) {
     //console.log(this.children[0].children[0])
@@ -95,13 +130,72 @@ $(() => {
       return
     }
 
+    taskselect(this, "taskselected");
+
+    let task_id = $(this).data("id");
+    let task = getask(task_id);
+    let task_name = $(this).find('.taskName').text();
+    let detaisname = $('#task_name');
+    //console.log(getask(task_id))
+
+    function conv(dateString) {
+      const date = new Date(dateString);
+
+      // Format the date as "yyyy-MM-dd"
+      if (dateString) {
+        const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+
+        // Output the formatted date
+        return formattedDate
+      } else {
+        return 'yyyy-MM-dd'
+      }
+    }
+
+    $('#reminder').val(conv(task.reminder));
+
+    $('#due_date').val(conv(task.due_date));
+
+    $('#myTextarea').val(task.task_description);
+
     let open = Number($(".details").css("width").split("px")[0]);
-    if (open) {
-      //closedetails();
+    if (open && $(this).data("id") == $('#task_name').attr("task_id")) {
+      closedetails();
     } else {
       opendetails();
     }
+    let folderid = $(".foldername").data("folderid");
+    //set id for delete(task)
+    $('.namddelete .delete').data("id", task_id);
+    detaisname.attr("task_id", task_id);
+    detaisname.data("folder_id", folderid);
+    detaisname.text(task_name);
   }
+
+  $('.taskdetails').on('change input', function () {
+    let detaisid = $('#task_name').attr("task_id");
+    let detaisname = $('#task_name').text();
+    let folderid = $('#task_name').data("folder_id");
+    let value
+
+    //console.log($(this))
+
+    if ($(this).is("div")) {
+      value = $(this).text();
+    } else {
+      value = $(this).val();
+    }
+
+    //console.log(value)
+    let name = $(this).attr('name');
+    let data = JSON.parse(`{"${name}": "${value.replace(/\n/g, '\\n')}", "task_name": "${detaisname}", "details": "True", "folder_id": "${folderid}"}`);
+    //console.log(folderid);
+    let newvals = updateTask(data, detaisid);
+    //console.log(newvals);
+    if (name == "task_name") {
+      $(`[data-id="${detaisid}"]`).find('.taskName').text(newvals.task_name)
+    }
+  });
 
   async function waitFor(s) {
     await new Promise(resolve => setTimeout(resolve, s));
@@ -120,7 +214,7 @@ $(() => {
         item = $(this.parentElement.parentElement).detach();
         let item_id = item.data('id');
         let taskName = item.data('task');
-        let upTask = { "is_checked": 1, "task_name": taskName }
+        let upTask = { "is_checked": 1, "task_name": taskName, "from": 1 }
         //console.log(upTask);
         //The selected element is a child of the parent element.
         updateTask(upTask, item_id)
@@ -130,7 +224,7 @@ $(() => {
         item = $(this.parentElement.parentElement).detach();
         let item_id = item.data('id');
         let taskName = item.data('task');
-        let upTask = { "is_checked": 0, "task_name": taskName }
+        let upTask = { "is_checked": 0, "task_name": taskName, "from": 1 }
         //console.log(upTask);
         //The selected element is a child of the parent element.
         updateTask(upTask, item_id)
@@ -153,14 +247,14 @@ $(() => {
         //console.log(item.data('id'))
         let item_id = item.data('id');
         let taskName = item.data('task');
-        let upTask = { "is_important": 0, "task_name": taskName }
+        let upTask = { "is_important": 0, "task_name": taskName, "from": 1 }
         //console.log(upTask);
         //The selected element is a child of the parent element.
         updateTask(upTask, item_id)
       } else if ($(this).hasClass('fa-solid')) {
         let item_id = item.data('id');
         let taskName = item.data('task');
-        let upTask = { "is_important": 1, "task_name": taskName }
+        let upTask = { "is_important": 1, "task_name": taskName, "from": 1 }
         //console.log(upTask);
         //The selected element is a child of the parent element.
         updateTask(upTask, item_id)
@@ -169,15 +263,30 @@ $(() => {
     }
   }
 
-  function folder(event) {
+  async function folder(event) {
     let folderId = $(this).data("id")
     // If the clicked li already has active class, do nothing
     //console.log(`folder: ${folderId}`)
     if ($(this).hasClass('active')) return;
 
+    $('.folders li.active .selfol').css('translate', '-32px');
+    await waitFor(60);
     // Otherwise remove active class from all li tags and add it to the clicked one
+    $('.folders li.active .selfol').remove();
     $('.folders li.active').removeClass('active');
+
+    let newDiv = $('<div>');
+    // Set the div's class and text
+    newDiv.addClass('selfol');
+
     $(this).addClass('active');
+
+    // Append the div to an element with class "my-container"
+    $('.folders li.active').prepend(newDiv);
+
+    await waitFor(60);
+    $('.folders li.active .selfol').css('translate', '0px');
+
     //console.log($(this).text());
     let data = getFolderTask(folderId);
     updateFolderNameAndId(folderId, $(this).text());
@@ -187,8 +296,10 @@ $(() => {
 
   function updateTask(jsonData, task_id) {
     let link = baseUrl + `/task/${task_id}`;
+    let resp
     $.ajax({
       url: link,
+      async: false,
       headers: {
         'Authorization': 'Bearer ' + jwt
       },
@@ -199,13 +310,14 @@ $(() => {
       success: function (response) {
         //handle success response
         //console.log(response);
-        return response;
+        resp = response;
       },
       error: function (xhr, textStatus, errorThrown) {
         //handle error response
         //alert(xhr.responseJSON);
       }
     });
+    return resp
   }
 
   $(".task").click(details)
@@ -321,8 +433,18 @@ $(() => {
 
   function updateFolderNameAndId(folderId, folderName) {
     //console.log(`updateFolderNameAndId: ${folderId}`)
-    $(".foldername").text(folderName);
+    const ignore = ["Important", "All", "Completed", "Task"]
+    //console.log(ignore, folderName.replace(/\s/g, ''), ignore.indexOf(folderName.replace(/\s/g, '')))
+    if (ignore.indexOf(folderName.replace(/\s/g, '')) !== -1) {
+      $(".folderdelete .delete").css("display", "none")
+    } else {
+      $(".folderdelete .delete").css("display", "block")
+    }
+
+    $(".foldername").text(folderName.replace(/\s/g, ''));
     $(".foldername").data("folderid", folderId);
+    //set id for delete(folder)
+    $(".folderdelete .delete").data("id", folderId);
   }
 
   $("#addTask").on("keydown", function (event) {
@@ -346,6 +468,91 @@ $(() => {
       // Do something here, such as submit the form or trigger a button click event
     }
   });
+
+  $(".delete").on("click", function (event) {
+    const ignore = ["Important", "All", "Completed", "Task"]
+    let id = $(this).data("id");
+    let which = $(this).parent().attr("class");
+    let name
+    const deleten = {
+      namddelete: "task",
+      folderdelete: "least"
+    }
+    if (which == "namddelete") {
+      name = $(`[data-id="${id}"]`).text();
+    } else if (which == "folderdelete") {
+      name = $(this).parent().text();
+    }
+
+    let whichdel = `deleten.${which}`
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You will not be able to recover ${eval(whichdel)}: ${name}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Handle the delete operation here
+        // You can use AJAX or any other method to delete the folder
+        // Once the delete operation is complete, show a success message using Sweet Alert 2
+        if (ignore.indexOf(name.replace(/\s/g, '')) !== -1) {
+          Swal.close()
+          return
+        }
+        if (del(which, id)) {
+          Swal.fire(
+            'Deleted!',
+            `Your ${eval(whichdel)} has been deleted.`,
+            'success'
+          );
+        } else {
+          Swal.fire(
+            'Error',
+            `Your ${eval(whichdel)} was not deleted`,
+            'error'
+          );
+        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          `Your ${eval(whichdel)} is safe :)`,
+          'error'
+        );
+      }
+    });
+  });
+
+  function del(which, id) {
+    let uri, res;
+
+    if (which == "namddelete") {
+      closedetails();
+      uri = baseUrl + `/task/${id}`;
+    } else if (which == "folderdelete") {
+      $('.fol>li:nth-child(4)').click();
+      uri = baseUrl + `/folder/${id}`;
+    }
+
+    $.ajax({
+      url: uri,
+      async: false,
+      headers: {
+        'Authorization': 'Bearer ' + jwt
+      },
+      type: 'DELETE',
+      success: function (response) {
+        res = 1
+        $(`[data-id="${id}"]`).remove();
+      },
+      error: function (xhr, textStatus, errorThrown) {
+        res = 0
+      }
+    });
+    return res
+  }
 
   function check() {
     var res;
@@ -402,7 +609,7 @@ $(() => {
         let position = $(this).data("position");
         let taskname = $(this).data("task");
         let taskid = $(this).data("id");
-        let data = { "position": position, "task_name": taskname };
+        let data = { "position": position, "task_name": taskname, "from": 1 };
         //console.log(data)
         updateTask(data, taskid)
         positions.push($(this).index());
@@ -421,7 +628,7 @@ $(() => {
         let position = $(this).data("position");
         let taskname = $(this).data("task");
         let taskid = $(this).data("id");
-        let data = { "position": position, "task_name": taskname };
+        let data = { "position": position, "task_name": taskname, "from": 1 };
         //console.log(data)
         updateTask(data, taskid)
         positions.push($(this).index());
@@ -442,5 +649,5 @@ $(() => {
 
   $('.folders li').click(folder);
 
-  $('.fol>li:first').click();
+  $('.fol>li:nth-child(4)').click();
 });
