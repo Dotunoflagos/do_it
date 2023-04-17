@@ -25,15 +25,15 @@ Receive push notifications and reminders for upcoming tasks
 Cross-platform support (available on Windows, MacOS, iOS, Android) through an Api
 
 ## Proposed user interface
-* # **Dashboard**
+* #### **Dashboard**
 
 ![Dashboard](./doitapp_ui/Doit%20App%20Dasboard.png)
 
-* **login**
+* #### **login**
 
 ![Login](./doitapp_ui/Doit%20App%20Login.png)
 
-* **signup**
+* #### **signup**
 
 ![Dashboard](./doitapp_ui/Doit%20App%20Signup.png)
 
