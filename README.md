@@ -25,6 +25,8 @@ Cross-platform support (available on Windows, MacOS, iOS, Android) through an Ap
 
 ![Dashboard](./doitapp_ui/Doit%20App%20Signup.png)
 
+## Live Demo / Landing Page
+* [Demo](https://dotunoflagos.pythonanywhere.com/)
 ## Author
 * **Name:** Balogun Adedotun
 * **github:** Dotunoflagos
