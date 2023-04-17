@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     // Add the images to the container
     for (var i = 0; i < numImages; i++) {
-      var image = $("<img>").attr("src", "/web_dynamic/static/images/DOIT.png");
+      var image = $("<img>").attr("src", "./web_dynamic/static/images/DOIT.png");
       image.css({
         "position": "absolute",
         "left": i * (imageWidth + imageSpacing),
