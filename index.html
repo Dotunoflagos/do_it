@@ -8,73 +8,188 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400&family=Tenor+Sans&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="web_dynamic/static/styles/4-common.css">
-  <link rel="stylesheet" type="text/css" href="web_dynamic/static/styles/landing.css">
-  <link rel="icon" href="../static/images/icon.png" />
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="web_dynamic/static/scripts/login.js"></script>
-	<script src="https://kit.fontawesome.com/11423b0f4d.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="web_dynamic/static/styles/4-common.css?{{ cache_id }}">
+  <link rel="stylesheet" type="text/css" href="web_dynamic/static/styles/landing.css?{{ cache_id }}">
+  <link rel="icon" href="web_dynamic/static/images/icon.png?{{ cache_id }}" />
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js?{{ cache_id }}"></script>
+  <script src="web_dynamic/static/scripts/landing.js?{{ cache_id }}"></script>
+  <script src="https://kit.fontawesome.com/11423b0f4d.js?{{ cache_id }}" crossorigin="anonymous"></script>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+
   <title>Welcome</title>
 </head>
 
 <body>
-  <nav class="nav_bar">
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Features</a></li>
-      <li><a href="/login/">login</a></li>
-      <li><a href="/signup/">Signup</a></li>
-    </ul>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a class="navbar-brand" href="#"><img src="web_dynamic/static/images/DOIT.png" alt="" class="doitlogo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#home">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#features">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login/">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/signup/">Signup</a>
+        </li>
+      </ul>
+    </div>
   </nav>
-  <div class="hero_body">
-    <h1>Welcome to <img src="web_dynamic/static/images/DOIT.png" alt=""> an online productivity app</h1>
+  <div class="hero_body" id="home">
+    <!--<h1>Welcome to <img src="../static/images/DOIT.png" alt=""> an online productivity app</h1>-->
+    <div class="container">
+      <h1>Welcome to Do-It an online productivity app</h1>
+    </div>
   </div>
-  <div class="about">
-    <h2>About</h2>
-    <p>Welcome to our Todo app, where organizing your tasks has never been easier or more efficient. We created our app
-      to help people like you stay on top of their daily tasks and keep track of everything they need to do. Our app is
-      designed to give you a clear and easy-to-use interface that lets you focus on your tasks without any distractions.
-      <br>
-      <br>
-      The app was built by Balogun Adedotun as a portfolio project for ALX Africa. You can find the app's code on my GitHub repository, <a href="https://github.com/Dotunoflagos/do_it">github.com/Dotunoflagos/do_it</a>.
-    </p>
+  <div class="about" id="about">
+    <div class="container">
+      <h2>About</h2>
+      <p>Welcome to our Todo app, where organizing your tasks has never been easier or more efficient. We created our
+        app
+        to help people like you stay on top of their daily tasks and keep track of everything they need to do. Our app
+        is
+        designed to give you a clear and easy-to-use interface that lets you focus on your tasks without any
+        distractions.
+        <br>
+        <br>
+        The app was built by Balogun Adedotun as a portfolio project for ALX Africa. You can find the app's code on my
+        GitHub repository, <a href="https://github.com/Dotunoflagos/do_it">github.com/Dotunoflagos/do_it</a>.
+      </p>
+    </div>
   </div>
-  <div class="features">
-    <div>
+  <div class="features" id="features">
+    <div class="container">
       <h2>Features</h2>
       <p>Our Todo app comes with a wide range of features that will make your task organization process quick and
         simple. Here are some of the key features:</p>
     </div>
-    <div>
-      <div>
-        <h3>Create Multiple Lists</h3>
-        <i class="fa-solid fa-list"></i>
-        <p>With our app, you can create as many lists as you want and organize your tasks in each list.</p>
-      </div>
-      <div>
-        <h3>Reminder</h3>
-        <i class="fa-solid fa-calendar-days"></i>
-        <p>You can set up reminders for important tasks, so you never forget what needs to be done.</p>
-      </div>
-      <div>
-        <h3>Important Tasks</h3>
-        <i class="fa-regular fa-star"></i>
-        <p>This feature enables the user to label a task as important, and then the task is shifted to a unique smart list.</p>
-      </div>
-      <div>
-        <h3>Easy-To-Use Interface</h3>
-        <i class="fa-regular fa-face-smile"></i>
-        <p>Our app has an intuitive and easy-to-use interface, making it simple to add, edit, and delete tasks.</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-6 d-flex align-items-center justify-content-center row">
+          <img src="web_dynamic/static/gif/AddList.gif" alt="" class="">
+          <div class="col-9 mt-5">
+            <h3>Create Multiple Lists</h3>
+            <i class="fa-solid fa-list"></i>
+            <p class="mb-0">With our app, you can create as many lists as you want and organize your tasks in each list.
+            </p>
+          </div>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-center row">
+          <img src="web_dynamic/static/gif/AddTask.gif" alt="" class="">
+          <div class="col-9 mt-5">
+            <h3>Create Task</h3>
+            <i class="fa-solid fa-plus"></i>
+            <p class="mb-0">You can set create multiple tasks, so you never forget what needs to be done.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="contactus">
-    <h2>Contact us</h2>
-    <p>If you have any questions or concerns about the doit app, please don't hesitate to reach out to me via email at
-      [Adedotun_balogun@yahoo.com] or through our contact. We're always happy to help and
-      would love to hear from you!</p>
+
+  <div class="pmov backb">
+    <div class="grow">
+      <div class="image-container w1"></div>
+    </div>
+
+    <div class="grow">
+      <div class="image-container w2"></div>
+    </div>
+
+    <div class="grow">
+      <div class="image-container w3"></div>
+    </div>
+
+    <div class="grow">
+      <div class="image-container w4"></div>
+    </div>
   </div>
+
+  <div class="features">
+    <div>
+
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12 d-flex align-items-center justify-content-start row mb-5 ml-5">
+          <img src="web_dynamic/static/gif/EditTask.gif" alt="" class="">
+          <div class="col-4 mt-5 ml-5">
+            <h3>Edit Tasks</h3>
+            <i class="fa-solid fa-pencil"></i>
+            <p>This feature enables the user to label a task as important, and then the task is shifted to a unique
+              smart
+              list.</p>
+          </div>
+        </div>
+        <div class="col-12 d-flex align-items-center justify-content-end row mb-5 mr-5">
+          <div class="col-4 mt-5 mr-5">
+            <h3>Delete Tasks</h3>
+            <i class="fa-solid fa-trash"></i>
+            <p>This feature enables the user to label a task as important, and then the task is shifted to a unique
+              smart
+              list.</p>
+          </div>
+          <img src="web_dynamic/static/gif/DeleteTaks.gif" alt="" class="">
+        </div>
+        <div class="col-12 d-flex align-items-center justify-content-start row mb-0 ml-5">
+          <img src="web_dynamic/static/gif/DeleteList.gif" alt="" class="">
+          <div class="col-4 mt-5 ml-5">
+            <h3>Delete List</h3>
+            <i class="fa-solid fa-trash"></i>
+            <p>This feature enables the user to label a task as important, and then the task is shifted to a unique
+              smart
+              list.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pmov backb">
+    <div class="grow">
+      <div class="image-container m1"></div>
+    </div>
+
+    <div class="grow">
+      <div class="image-container m2"></div>
+    </div>
+
+    <div class="grow">
+      <div class="image-container m3"></div>
+    </div>
+
+    <div class="grow">
+      <div class="image-container m4"></div>
+    </div>
+
+  </div>
+  <div class="contactus" id="contact">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>If you have any questions or concerns about the doit app, please don't hesitate to reach out to me via email at
+        Adedotun_balogun@yahoo.com or through <a href="https://www.linkedin.com/in/adedotun-balogun-b5130514b/">linkedin</a> . A always happy to help and
+        would love to hear from you!
+      </p>
+    </div>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 </body>
+
 
 </html>

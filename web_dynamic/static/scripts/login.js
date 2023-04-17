@@ -40,6 +40,7 @@ $(() => {
       }
     });
     //Start loader
+    message.text("");
     loadr(1);
     // send a POST request to the server with the form data
     $.ajax({
@@ -73,11 +74,21 @@ $(() => {
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
         //alert(xhr.responseJSON.error);
+        let t
+        if (xhr.responseJSON) {
+          t = 1000
+        } else {
+          t = 6000
+        }
         setTimeout(function () {
           loadr();
           message.css('color', 'red');
-          message.text(xhr.responseJSON.error);
-        }, 1000);
+          if (xhr.responseJSON) {
+            message.text(xhr.responseJSON.error);
+          } else {
+            message.text("Check your internet connection");
+          }
+        }, t);
       }
     });
     //End loader
