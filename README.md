@@ -1,5 +1,17 @@
 # DOIT - The Must-Have Todo App
 
+## Table of Contents
+
+- [Description](#description)
+- [Features](#features)
+- [Proposed User Interface](#proposed-user-interface)
+  - [Dashboard](#dashboard)
+  - [Login](#login)
+  - [Signup](#signup)
+- [Live Demo/Landing Page](#live-demo--landing-page)
+- [Author](#author)
+- [License](#license)
+
 ## Description
 Doit is a highly intuitive and easy-to-use application designed to help you keep track of your daily tasks. With features, such as deadlines, priority settings,reminders and notifications, you can have complete control over your to-do list and never miss an important event again.
 
