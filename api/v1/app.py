@@ -10,6 +10,7 @@ from api.v1.views.config.swagger import template, swagger_config
 from flasgger import Swagger
 from flasgger.utils import swag_from
 from datetime import timedelta
+import time
 
 app = Flask(__name__)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
@@ -18,6 +19,9 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
+@app.before_request
+def delay_request():
+    time.sleep(1)
 
 @app.teardown_appcontext
 def close_db(error):

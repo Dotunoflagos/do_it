@@ -193,7 +193,7 @@ $(() => {
     let newvals = updateTask(data, detaisid);
     //console.log(newvals);
     if (name == "task_name") {
-      $(`[data-id="${detaisid}"]`).find('.taskName').text(newvals.task_name)
+      $(`[data-id="${detaisid}"]`).find('.taskName').text(detaisname/*newvals.task_name*/)
     }
   });
 
@@ -263,35 +263,56 @@ $(() => {
     }
   }
 
-  async function folder(event) {
+  function folder(event) {
     let folderId = $(this).data("id")
     // If the clicked li already has active class, do nothing
     //console.log(`folder: ${folderId}`)
     if ($(this).hasClass('active')) return;
 
-    $('.folders li.active .selfol').css('translate', '-32px');
-    await waitFor(60);
+    //$('.folders li.active .selfol').css('translate', '-32px');
+    //await waitFor(60);
     // Otherwise remove active class from all li tags and add it to the clicked one
-    $('.folders li.active .selfol').remove();
+    //$('.folders li.active .selfol').remove();
     $('.folders li.active').removeClass('active');
 
+    //let newDiv = $('<div>');
+    // Set the div's class and text
+    //newDiv.addClass('selfol');
+    
+    $(this).addClass('active');
+    dot(this)
+    // Append the div to an element with class "my-container"
+    //$('.folders li.active').prepend(newDiv);
+
+    //await waitFor(60);
+    //$('.folders li.active .selfol').css('translate', '0px');
+
+    //console.log($(this).text());
+    updateFolderNameAndId(folderId, $(this).text());
+    $('#unchecked').empty();
+    $('#checked').empty();
+    updateDone();
+    getFolderTask(folderId, renderTasks);
+    //renderTasks(data);
+  }
+
+  async function dot(thi) {
+    if ($(thi).hasClass('.active')) return;
+   // console.log($(thi))
+
+    $(".folders li.active .selfol").css('translate', '-32px');
+    await waitFor(80);
+    $('.selfol').remove();
+    
     let newDiv = $('<div>');
     // Set the div's class and text
     newDiv.addClass('selfol');
 
-    $(this).addClass('active');
-
     // Append the div to an element with class "my-container"
     $('.folders li.active').prepend(newDiv);
-
-    await waitFor(60);
+    await waitFor(80);
     $('.folders li.active .selfol').css('translate', '0px');
 
-    //console.log($(this).text());
-    let data = getFolderTask(folderId);
-    updateFolderNameAndId(folderId, $(this).text());
-    renderTasks(data);
-    updateDone();
   }
 
   function updateTask(jsonData, task_id) {
@@ -299,7 +320,7 @@ $(() => {
     let resp
     $.ajax({
       url: link,
-      async: false,
+      //async: false,
       headers: {
         'Authorization': 'Bearer ' + jwt
       },
@@ -380,13 +401,13 @@ $(() => {
     return res
   }
 
-  function getFolderTask(folder_id) {
+  function getFolderTask(folder_id, next) {
     let link = baseUrl + `/folder/${folder_id}/all_task`;
     var res;
 
     $.ajax({
       url: link,
-      async: false,
+      //async: false,
       headers: {
         'Authorization': 'Bearer ' + jwt
       },
@@ -395,7 +416,7 @@ $(() => {
       contentType: 'application/json',
       success: function (response) {
         // handle success response
-        res = response;
+        next(response);
       },
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
@@ -424,6 +445,7 @@ $(() => {
           $('#unchecked').prepend(item);
         }
       });
+      updateDone();
     } else {
       $('#unchecked').empty();
       $('#checked').empty();

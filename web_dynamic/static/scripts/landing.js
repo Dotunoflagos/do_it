@@ -5,14 +5,14 @@ $(document).ready(function () {
     var numImages = Math.floor($(window).width() / (imageWidth + imageSpacing)) + 3;
     var containerWidth = numImages * (imageWidth + imageSpacing) - imageSpacing;
     var currentPosition = 0;
-    var speed = 6;
+    var speed = 1.5;
 
     // Set the width of the container
     $(id).width(containerWidth);
 
     // Add the images to the container
     for (var i = 0; i < numImages; i++) {
-      var image = $("<img>").attr("src", "./web_dynamic/static/images/DOIT.png");
+      var image = $("<img>").attr("src",`../static/images/DOIT.png?${i}`);
       image.css({
         "position": "absolute",
         "left": i * (imageWidth + imageSpacing),

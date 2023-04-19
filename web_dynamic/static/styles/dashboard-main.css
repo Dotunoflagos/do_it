@@ -135,7 +135,7 @@
     left: 0;
     margin-left: 25px;
     position: absolute;
-    transition: translate .06s;
+    transition: translate .1s;
     translate: -32px
 }
 
