@@ -47,7 +47,7 @@ $(() => {
       url: link,
       dataType: 'json',
       type: 'POST',
-      async: false,
+      //async: false,
       contentType: 'application/json',
       data: JSON.stringify(jsonData),
       success: function (response) {
