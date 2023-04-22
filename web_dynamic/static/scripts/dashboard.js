@@ -331,7 +331,7 @@ $(() => {
     // If the clicked li already has active class, do nothing
     //console.log(`folder: ${folderId}`)
     if ($(this).hasClass('active')) return;
-
+    closedetails();
     //$('.folders li.active .selfol').css('translate', '-32px');
     //await waitFor(60);
     // Otherwise remove active class from all li tags and add it to the clicked one

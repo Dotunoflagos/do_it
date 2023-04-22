@@ -59,7 +59,6 @@ $(() => {
         let data = JSON.parse(jsonData);
         let id = data.user.id;
         //get base url
-        const baseUrl = window.location.origin;
         const link = "/dashboard/" + id
         //redirect after 3sec
         //loadr(1);
@@ -74,13 +73,6 @@ $(() => {
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
         //alert(xhr.responseJSON.error);
-        let t
-        if (xhr.responseJSON) {
-          t = 1000
-        } else {
-          t = 6000
-        }
-        setTimeout(function () {
           loadr();
           message.css('color', 'red');
           if (xhr.responseJSON) {
@@ -88,7 +80,6 @@ $(() => {
           } else {
             message.text("Check your internet connection");
           }
-        }, t);
       }
     });
     //End loader
