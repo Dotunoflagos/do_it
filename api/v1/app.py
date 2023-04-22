@@ -19,9 +19,9 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=24)
 app.register_blueprint(app_views)
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 
-@app.before_request
+'''@app.before_request
 def delay_request():
-    time.sleep(1)
+    time.sleep(1)'''
 
 @app.teardown_appcontext
 def close_db(error):

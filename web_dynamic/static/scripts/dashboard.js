@@ -48,9 +48,57 @@ $(() => {
     done.text(numberOftask)
   }
   updateDone();
+  function load(flag) {
+    if (flag == 'rm') {
+      $('#loadx').remove()
+      return
+    }
 
-  function newTask(taskName, id, position, dueDate = "") {
-    let taskob = $(`
+    $('#unchecked').prepend(`
+      <div class="task" id="loadx">
+        <div>
+          
+        </div>
+  
+        <div>
+          
+        </div>
+      </div>
+      `);
+  }
+
+  function loaddash(flag) {
+    if (flag == 'rm') {
+      $('.loady').remove()
+      $('.namddelete, .detailsbod .us').css("opacity", 1)
+      return
+    }
+    
+    $('.namddelete, .detailsbod .us').css("opacity", 0)
+    for (let i = 0; i <= 3; i++) {
+      add();
+    }
+    function add() {
+      $('.detailsbod').prepend(`
+      <div class="task loady">
+        <div>
+          
+        </div>
+  
+        <div>
+          
+        </div>
+      </div>
+      `);
+    }
+  }
+
+  function newTask(obj) {
+    const taskName = obj.task_name
+    const id = obj.id
+    const position = obj.position
+    const dueDate = ""
+    let item = $(`
     <div class="task" data-id="${id}" data-task="${taskName}" data-position="${position}">
       <div>
         <div name="tick" class="tick checkbox"></div>
@@ -64,10 +112,22 @@ $(() => {
     </div>
     `)
 
-    taskob.click(details);
-    taskob.find(".checkbox").click(checkBox);
-    taskob.find(".important").click(important);
-    return taskob
+    item.click(details);
+    item.find(".checkbox").click(checkBox);
+    item.find(".important").click(important);
+
+    if (obj.is_important) {
+      item.find(".important").toggleClass('fa-regular fa-solid');
+    }
+
+    if (obj.is_checked) {
+      item.find(".tick").addClass('checked');
+      $('#checked').prepend(item);
+    } else {
+      $('#unchecked').prepend(item);
+    }
+    load('rm')
+    return item
   }
 
   function newFolder(leastName, id, position = "", dueDate = "") {
@@ -86,20 +146,21 @@ $(() => {
   $(".detailsbtn").click(closedetails)
 
   //Function Gets task data
-  function getask(task_id) {
+  function getask(task_id, next) {
     let link = baseUrl + `/task/${task_id}`;
     let res
 
     $.ajax({
       url: link,
-      async: false,
+      //async: false,
       headers: {
         'Authorization': 'Bearer ' + jwt
       },
       type: 'GET',
       success: function (response) {
         // handle success response
-        res = response;
+        //res = response;
+        next(response)
         //console.log(response);
       },
       error: function (xhr, textStatus, errorThrown) {
@@ -131,12 +192,24 @@ $(() => {
     }
 
     taskselect(this, "taskselected");
-
+    loaddash();
     let task_id = $(this).data("id");
-    let task = getask(task_id);
     let task_name = $(this).find('.taskName').text();
     let detaisname = $('#task_name');
     //console.log(getask(task_id))
+    let open = Number($(".details").css("width").split("px")[0]);
+    if (open && $(this).data("id") == $('#task_name').attr("task_id")) {
+      closedetails();
+    } else {
+      opendetails();
+    }
+
+    let folderid = $(".foldername").data("folderid");
+    //set id for delete(task)
+    $('.namddelete .delete').data("id", task_id);
+    detaisname.attr("task_id", task_id);
+    detaisname.data("folder_id", folderid);
+    detaisname.text(task_name);
 
     function conv(dateString) {
       const date = new Date(dateString);
@@ -152,24 +225,14 @@ $(() => {
       }
     }
 
-    $('#reminder').val(conv(task.reminder));
+    let task = getask(task_id, (task) => {
+      $('#reminder').val(conv(task.reminder));
 
-    $('#due_date').val(conv(task.due_date));
+      $('#due_date').val(conv(task.due_date));
 
-    $('#myTextarea').val(task.task_description);
-
-    let open = Number($(".details").css("width").split("px")[0]);
-    if (open && $(this).data("id") == $('#task_name').attr("task_id")) {
-      closedetails();
-    } else {
-      opendetails();
-    }
-    let folderid = $(".foldername").data("folderid");
-    //set id for delete(task)
-    $('.namddelete .delete').data("id", task_id);
-    detaisname.attr("task_id", task_id);
-    detaisname.data("folder_id", folderid);
-    detaisname.text(task_name);
+      $('#myTextarea').val(task.task_description);
+      loaddash("rm");
+    });
   }
 
   $('.taskdetails').on('change input', function () {
@@ -278,7 +341,7 @@ $(() => {
     //let newDiv = $('<div>');
     // Set the div's class and text
     //newDiv.addClass('selfol');
-    
+
     $(this).addClass('active');
     dot(this)
     // Append the div to an element with class "my-container"
@@ -292,18 +355,19 @@ $(() => {
     $('#unchecked').empty();
     $('#checked').empty();
     updateDone();
+    load();
     getFolderTask(folderId, renderTasks);
     //renderTasks(data);
   }
 
   async function dot(thi) {
     if ($(thi).hasClass('.active')) return;
-   // console.log($(thi))
+    // console.log($(thi))
 
     $(".folders li.active .selfol").css('translate', '-32px');
     await waitFor(80);
     $('.selfol').remove();
-    
+
     let newDiv = $('<div>');
     // Set the div's class and text
     newDiv.addClass('selfol');
@@ -346,13 +410,13 @@ $(() => {
   $('.checkbox').click(checkBox);
 
 
-  function sendTask(jsonData) {
+  function sendTask(jsonData, next) {
     let link = baseUrl + "/task";
     let res = []
-
+    load()
     $.ajax({
       url: link,
-      async: false,
+      //async: false,
       headers: {
         'Authorization': 'Bearer ' + jwt
       },
@@ -363,6 +427,7 @@ $(() => {
       success: function (response) {
         // handle success response
         res = response;
+        next(response)
       },
       error: function (xhr, textStatus, errorThrown) {
         // handle error response
@@ -432,25 +497,14 @@ $(() => {
       $('#unchecked').empty();
       $('#checked').empty();
       data.forEach(element => {
-        let item = newTask(element.task_name, element.id, element.position);
-
-        if (element.is_important) {
-          item.find(".important").toggleClass('fa-regular fa-solid');
-        }
-
-        if (element.is_checked) {
-          item.find(".tick").addClass('checked');
-          $('#checked').prepend(item);
-        } else {
-          $('#unchecked').prepend(item);
-        }
+        newTask(element);
       });
       updateDone();
     } else {
       $('#unchecked').empty();
       $('#checked').empty();
     }
-
+    load('rm')
   }
 
   function updateFolderNameAndId(folderId, folderName) {
@@ -478,13 +532,12 @@ $(() => {
       $("#addTask").val("");
       //console.log(task.find(".task").prevObject[0]);
       //console.log(valueJson)
-      let res = sendTask(valueJson);
+      let res = sendTask(valueJson, newTask);
       //console.log(res)
-      let task = newTask(res.task_name, res.id, res.position);
+      //let task = newTask(res);
       //task.click(details);
       //task.find(".checkbox").click(checkBox);
       // Enter key pressed
-      $('#unchecked').prepend(task);
       valueJson.task_name = "";
       valueJson.folder_id = "";
       // Do something here, such as submit the form or trigger a button click event

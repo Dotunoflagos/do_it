@@ -469,3 +469,56 @@
 #addList {
     margin-bottom: 40px;
 }
+
+#loadx {
+    background-color: #ffffffb0;
+    box-shadow: none;
+    animation: progress 1s cubic-bezier(0.55, 0, 0.42, 0.99) infinite;
+}
+
+@keyframes progress {
+    0% {
+        width: 0%;
+        background-color: #ffffff8f;
+    }
+
+    25% {
+        background-color: #ffffff;
+    }
+
+    50% {
+        background-color: #ffffff6c;
+    }
+
+    100% {
+        width: 100%;
+        background-color: #ffffff;
+    }
+}
+
+.loady {
+    background-color: #eeeeee;
+    height: 40px;
+    box-shadow: none;
+    animation: progressy 1s cubic-bezier(0.55, 0, 0.42, 0.99) infinite;
+}
+
+@keyframes progressy {
+    0% {
+        width: 0%;
+        background-color: #ffffff;
+    }
+
+    25% {
+        background-color: #eeeeee;
+    }
+
+    50% {
+        background-color: #ffffff;
+    }
+
+    100% {
+        width: 100%;
+        background-color: #eeeeee;
+    }
+}
