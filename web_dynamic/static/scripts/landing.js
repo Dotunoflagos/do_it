@@ -12,7 +12,7 @@ $(document).ready(function () {
 
     // Add the images to the container
     for (var i = 0; i < numImages; i++) {
-      var image = $("<img>").attr("src","../static/images/DOIT.png");
+      var image = $("<img>").attr("src", "../static/images/DOIT.png").attr("class", "movers");
       image.css({
         "position": "absolute",
         "left": i * (imageWidth + imageSpacing),
@@ -41,10 +41,10 @@ $(document).ready(function () {
     }
 
     const $element = $(id);
-
     // Create the observer
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
+        clearInterval($element.data("intervalId"));
         // If the element is in view, start moving right
         if (entry.isIntersecting) {
           if (direction == "R") {
@@ -63,15 +63,38 @@ $(document).ready(function () {
     observer.observe($element[0]);
 
   }
-  move(".w1", "R", 25);
-  move(".w2", "L", 15);
-  move(".w3", "R", 19);
-  move(".w4", "L", 20);
+  const slides = [
+    [".w1", "R", 25],
+    [".w2", "L", 15],
+    [".w3", "R", 19],
+    [".w4", "L", 20],
+    [".m1", "R", 25],
+    [".m2", "L", 15],
+    [".m3", "R", 19],
+    [".m4", "L", 20],
+  ]
 
-  move(".m1", "R", 25);
-  move(".m2", "L", 15);
-  move(".m3", "R", 19);
-  move(".m4", "L", 20);
+  function slide(arr) {
+    arr.forEach((line) => {
+      move(...line)
+    })
+  }
+
+  var previousWidth = $(window).width();
+  slide(slides);
+  $(window).on('resize', function () {
+    var currentWidth = $(window).width();
+    // Check if only the window width has changed
+    if (currentWidth !== previousWidth && $(window).height() === $(window).outerHeight()) {
+      // Remove all elements with the class "movers"
+      $('.movers').remove();
+
+      // Call the slide function passing in the "slides" variable
+      slide(slides);
+    }
+
+    previousWidth = currentWidth;
+  });
 
   $('.navbar-nav a[href^="#"]').on('click', function (event) {
     const target = $(this.getAttribute('href'));
@@ -90,26 +113,26 @@ $(document).ready(function () {
     //clearTimeout(timer);
 
     //timer = setTimeout(function () {
-      var viewportTop = $(window).scrollTop();
-      var viewportBottom = viewportTop + $(".navbar").height();
+    var viewportTop = $(window).scrollTop();
+    var viewportBottom = viewportTop + $(".navbar").height();
 
-      $('#home, #about, .contactus, .pmov, .features').each(function () {
-        var elementTop = $(this).offset().top;
-        var elementBottom = elementTop + $(this).outerHeight();
+    $('#home, #about, .contactus, .pmov, .features').each(function () {
+      var elementTop = $(this).offset().top;
+      var elementBottom = elementTop + $(this).outerHeight();
 
-        //if (elementTop <= viewportBottom && elementBottom >= viewportTop) {
-        //console.log(`elementTop: ${elementTop} <= viewportTop: ${viewportTop} && elementBottom: ${elementBottom} >= viewportBottom: ${viewportBottom}`);
-        if (elementTop <= viewportTop + 25.9375 && elementBottom  + 25.9375 >= viewportBottom) {
-          let bgc = $(this).css("background-color")
-          if ( bgc == "rgba(0, 0, 0, 0)") {
-            $(".nav-link").css("color", "rgb(0 0 0 / 50%)")
-            $(".navbar-dark .navbar-nav .active>.nav-link").css("color", "Black")
-          } else {
-            $(".nav-link").css("color", "rgba(255,255,255,.5)")
-            $(".navbar-dark .navbar-nav .active>.nav-link").css("color", "white")
-          }
+      //if (elementTop <= viewportBottom && elementBottom >= viewportTop) {
+      //console.log(`elementTop: ${elementTop} <= viewportTop: ${viewportTop} && elementBottom: ${elementBottom} >= viewportBottom: ${viewportBottom}`);
+      if (elementTop <= viewportTop + $(".navbar").height()/*+ 25.9375*/ && elementBottom /*+ 25.9375*/ >= viewportBottom) {
+        let bgc = $(this).css("background-color")
+        if (bgc == "rgba(0, 0, 0, 0)" || bgc == "rgb(138, 43, 226)") {
+          $(".nav-link").css("color", "rgb(0 0 0 / 50%)")
+          $(".navbar-dark .navbar-nav .active>.nav-link").css("color", "Black")
+        } else {
+          $(".nav-link").css("color", "rgba(255,255,255,.5)")
+          $(".navbar-dark .navbar-nav .active>.nav-link").css("color", "white")
         }
-      });
+      }
+    });
     //}, 200); // delay the execution by 200 milliseconds
   });
 
